@@ -1,0 +1,4 @@
+* paperasse
+** Description
+An official document generator
+** Result
