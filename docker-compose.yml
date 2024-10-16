@@ -1,0 +1,6 @@
+services:
+  web:
+    image: paperasse
+    build: .
+    volumes:
+      - "./:/app"
