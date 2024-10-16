@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-gem "redcarpet"
-gem "hexapdf"
+source 'https://rubygems.org'
 
-source "https://rubygems.org"
+gem 'hexapdf'
+gem 'redcarpet'
 
-# gem "rails"
+group :development, :test do
+  gem 'debug'
+  gem 'rubocop'
+end
