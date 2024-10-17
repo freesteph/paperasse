@@ -7,5 +7,7 @@ gem 'redcarpet'
 
 group :development, :test do
   gem 'debug'
+  gem 'guard'
+  gem 'guard-shell'
   gem 'rubocop'
 end
