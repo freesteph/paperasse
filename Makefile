@@ -1,4 +1,4 @@
-DOCKER-RUN = docker compose run -e TERM --rm --entrypoint=""
+DOCKER-RUN = docker compose run -e TERM -e RUBY_DEBUG_NO_RELINE=true --rm --entrypoint=""
 BUNDLE-EXEC = bundle exec
 
 build:

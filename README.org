@@ -1,4 +1,15 @@
 * paperasse
 ** Description
-An official document generator
-** Result
+
+Un générateur de document qui produit des PDFs accessibles et
+conformes à la marque de l'État en acceptant un contenu en Markdown.
+
+À terme pourrait gérer différents templates, leur versionnage,
+pourquoi pas des signatures etc.
+
+** La manoeuvre
+
+#+begin_src
+make sh
+ruby main.rb # transforme le markdown dans note.md
+#+end_src
