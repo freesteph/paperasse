@@ -17,8 +17,8 @@ class PaperpasseRender < Redcarpet::Render::Base
   def initialize
     @composer = HexaPDF::Composer.new(page_size: :A4, margin: 48)
 
-    @title = "Audit reco"
-    @subtitle = "This is great"
+    @title = "Titre du document"
+    @subtitle = "Sous-titre du document"
 
     @header_done = false
 
@@ -30,8 +30,6 @@ class PaperpasseRender < Redcarpet::Render::Base
 
   def doc_header
     @composer.image('./logo.png', height: 100, position: :float)
-    @composer.text(@title.upcase, style: :title, margin: [150, 0, 0, 0])
-    @composer.text(@subtitle.upcase, style: :subtitle)
 
     nil
   end
@@ -41,6 +39,13 @@ class PaperpasseRender < Redcarpet::Render::Base
   end
 
   def header(title, level)
+    case level
+    when 1
+      @composer.text(title.upcase, style: :title, margin: [150, 0, 0, 0])
+    when 2
+      @composer.text(title.upcase, style: :subtitle)
+    end
+
     nil
   end
 

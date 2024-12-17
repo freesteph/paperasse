@@ -1,4 +1,9 @@
 * paperasse
+
+[[https://github.com/freesteph/paperasse/raw/main/screenshot.png]]
+
+*ATTENTION* : ce projet n'est actuellement qu'un _proof-of-concept_.
+
 ** Description
 
 Un générateur de document qui produit des PDFs accessibles et
