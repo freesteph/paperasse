@@ -1,3 +1,8 @@
+---
+title: Le titre du document
+subtitle: Le sous-titre du doc
+author: Marie Curie
+---
 
 # Compte-rendu du petit-déjeuner de la DINUM
 

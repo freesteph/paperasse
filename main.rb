@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require_relative 'lib/renderer'
+require_relative 'lib/templates/base'
+require_relative 'lib/frontmatter'
 
 content = File.read('./note.md')
 
-doc = Redcarpet::Markdown.new(PaperpasseRender)
+puts 'Generating document...'
 
-puts "Generating document..."
+Paperasse::FrontmatterParser.parse(content) => { data:, content: }
 
-doc.render(content)
+Redcarpet::Markdown.new(Paperasse::Base.new(data)).render(content)
 
-puts "Done."
+puts 'Done.'
