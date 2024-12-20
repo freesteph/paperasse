@@ -16,19 +16,34 @@ module Paperasse
     def initialize(data)
       @composer = HexaPDF::Composer.new(page_size: :A4, margin: 48)
 
-      @title = data[:title]
-      @subtitle = data[:subtitle]
+      @data = data
+
+      @title = data["title"]
+      @subtitle = data["subtitle"]
 
       setup_fonts!
       setup_style!
 
+      # @composer.document.config['debug'] = true
       super()
     end
 
     def doc_header
-      @composer.image('./logo.png', height: 100, position: :float)
+      @composer.container do |container|
+        container.image('./logo.png', height: 100, style: { mask_mode: :box })
+        container.text(author, text_align: :right, font: ['Arial', { variant: :bold }], font_size: 12)
+      end
+
+      @composer.container(style: { padding: [49, 0, 35, 0] }) do |container|
+        container.text(@title.upcase, style: :title) # don't upcase, style it
+        container.text(@subtitle, style: :subtitle) unless @subtitle.nil?
+      end
 
       nil
+    end
+
+    def author
+      "Direction\nInterministérielle\ndu Numérique"
     end
 
     def header(title, level)
@@ -36,30 +51,20 @@ module Paperasse
       when 1
         @composer.text(title.upcase, style: :title, margin: [150, 0, 0, 0])
       when 2
-        @composer.text(title.upcase, style: :subtitle)
+        @composer.text(title.upcase, style: :paragraph_title)
       end
 
       nil
     end
 
     def list_item(text, _list_type)
-      composer.list { |l| l.text(text) }
-
-      nil
-    end
-
-    def double_emphasis(text)
-      nil
-    end
-
-    def emphasis(text)
-      composer.text(text, style: :bold)
+      composer.list { |l| l.text(text, margin: [3, 0]) }
 
       nil
     end
 
     def paragraph(text)
-      composer.text(text)
+      composer.text(text, style: :base, margin: [5, 0])
 
       nil
     end
@@ -87,8 +92,8 @@ module Paperasse
     # some/path/Arial Bold Italic.tff => :bold_italic
     def infer_variant(filename)
       components = File.basename(filename, '.*')
-                     .split
-                     .slice(1..)
+                       .split
+                       .slice(1..)
 
       return nil if components.empty?
 
@@ -96,11 +101,11 @@ module Paperasse
     end
 
     def setup_style!
-      composer.style(:base, font: 'Arial', font_size: 10, line_spacing: 1.3, last_line_gap: true, padding: [3, 0, 0, 0])
-      composer.style(:title, font: ['Arial', { variant: :bold }], font_size: 12, align: :center, padding: [10, 0])
+      composer.style(:base, font: 'Arial', font_size: 10, last_line_gap: true)
+      composer.style(:title, font: ['Arial', { variant: :bold }], font_size: 12, align: :center)
       composer.style(:direction, font_size: 12, align: :right)
-      composer.style(:subtitle, align: :center, padding: [0, 30], line_height: 12)
-      composer.style(:paragraph_title, font: ['Arial', { variant: :bold }], font_size: 10, margin: [10, 0, 0, 0])
+      composer.style(:subtitle, align: :center, line_height: 12)
+      composer.style(:paragraph_title, font: ['Arial', { variant: :bold }], font_size: 10)
       composer.style(:legal, font: ['Arial', { variant: :italic }])
       composer.style(:bold, font: ['Arial', { variant: :bold }])
     end
